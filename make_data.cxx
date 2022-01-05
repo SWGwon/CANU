@@ -1,5 +1,5 @@
 void make_data() {
-    TFile* outputFile = new TFile("data.root", "RECREATE");
+    TFile* outputFile = new TFile("mock_data.root", "RECREATE");
     TTree* outputTree = new TTree("tree", "tree");
 
     bool isSignal; outputTree->Branch("isSignal", &isSignal, "isSignal/O");
@@ -13,6 +13,8 @@ void make_data() {
     outputTree->Branch("y2", &y2, "y2/f");
     outputTree->Branch("z2", &z2, "z2/f");
     outputTree->Branch("t2", &t2, "t2/f");
+    float energy;
+    outputTree->Branch("energy", &energy, "energy/f");
 
     TRandom* random = new TRandom();
     random->SetSeed(0);
@@ -25,23 +27,25 @@ void make_data() {
             isSignal = false;
         }
         if (isSignal) {
-            x1 = random->Gaus(0, 1);
-            y1 = random->Gaus(0, 1);
-            z1 = random->Gaus(0, 1);
-            t1 = random->Gaus(0, 1);
-            x2 = random->Gaus(10, 1);
-            y2 = random->Gaus(10, 1);
-            z2 = random->Gaus(10, 1);
+            x1 = random->Uniform(-100, 100);
+            y1 = random->Uniform(-100, 100);
+            z1 = random->Uniform(-100, 100);
+            t1 = 0;
+            x2 = x1 + random->Gaus(0,10); 
+            y2 = y1 + random->Gaus(0,10); 
+            z2 = z1 + random->Gaus(0,10); 
             t2 = random->Gaus(10, 1);
+            energy = random->Gaus(100,1);
         } else {
-            x1 = random->Gaus(3, 1);
-            y1 = random->Gaus(3, 1);
-            z1 = random->Gaus(3, 1);
-            t1 = random->Gaus(3, 1);
-            x2 = random->Gaus(8, 1);
-            y2 = random->Gaus(8, 1);
-            z2 = random->Gaus(8, 1);
-            t2 = random->Gaus(8, 1);
+            x1 = random->Uniform(-100, 100);
+            y1 = random->Uniform(-100, 100);
+            z1 = random->Uniform(-100, 100);
+            t1 = 0;
+            x2 = random->Uniform(-100, 100);
+            y2 = random->Uniform(-100, 100);
+            z2 = random->Uniform(-100, 100);
+            t2 = random->Uniform(0, 20);
+            energy = random->Gaus(80,10);
         }
         outputTree->Fill();
     }
