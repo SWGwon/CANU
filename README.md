@@ -40,3 +40,11 @@ ex)
     *Baskets :       10 : Basket Size=      32000 bytes  Compression=   1.24     *
     *............................................................................*
     
+## 변수로 histogram그리기
+
+    tree->Draw("변수명")
+
+ex)
+
+    tree->Draw("x1")
+
